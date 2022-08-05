@@ -46,7 +46,7 @@ public class AggController {
 	@Value("${shipment-requests.queue}")
 	private String shipments_requests_queue_name;
 
-	@RequestMapping(value = "/v1/aggregation/camel", produces = { "application/json" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/aggregation-api", produces = { "application/json" }, method = RequestMethod.GET)
 
 	public ResponseEntity<Response> aggregationGet(
 			@NotNull @Parameter(in = ParameterIn.QUERY, description = "", required = false, schema = @Schema()) @Valid @RequestParam(value = "pricing", required = true) String pricing,
