@@ -2,39 +2,40 @@ package com.fedex.assessment.aggregator.repository.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RESPONSE_DATA")
+@Table(name = "API_RESPONSE")
+@IdClass(ApiResponseDataId.class)
+public class ApiResponse implements Serializable {
 
-public class ResponseData implements Serializable {
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	private UUID uuid;
+	@Id
+	private String reqParam;
+	
 	@Column(name = "req_type")
 	private String reqType;
-	@Column(name = "req_param")
-	private String reqParam;
+	
+
 	@Column(name = "created_on")
 	private Timestamp createdOn;
-	
+
 	@Column(name = "res_param")
 	private String resParam;
 
-	public ResponseData() {
+	public ApiResponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResponseData(String reqType, String reqParam, Timestamp createdOn, String resParam) {
+	public ApiResponse(String reqType, String reqParam, Timestamp createdOn, String resParam) {
 		super();
 		this.reqType = reqType;
 		this.reqParam = reqParam;
@@ -44,8 +45,16 @@ public class ResponseData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ResponseData [reqType=" + reqType + ", reqParam=" + reqParam + ", createdOn=" + createdOn
-				+ ", resParam=" + resParam + "]";
+		return "ApiResponse [uuid=" + uuid + ", reqType=" + reqType + ", reqParam=" + reqParam + ", createdOn="
+				+ createdOn + ", resParam=" + resParam + "]";
+	}
+
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getReqType() {
@@ -79,9 +88,5 @@ public class ResponseData implements Serializable {
 	public void setResParam(String resParam) {
 		this.resParam = resParam;
 	}
-	
-	
-
-	
 
 }

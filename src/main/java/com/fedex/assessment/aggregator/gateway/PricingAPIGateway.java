@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class PricingAPIGateway {
+	private static final Logger log = LoggerFactory.getLogger(PricingAPIGateway.class);
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -27,15 +28,15 @@ public class PricingAPIGateway {
 	
 	
 	public Map<String, BigDecimal> getPricing(String countriesStr) throws Exception {
-		System.out.println("calling pricing API: ");
+		log.info("calling pricing API: ");
 		ParameterizedTypeReference<HashMap<String, BigDecimal>> responseType = new ParameterizedTypeReference<HashMap<String, BigDecimal>>() {
 		};
-		System.out.println("countriesStr :" + countriesStr);
+		log.info("countriesStr :" + countriesStr);
 		String URL = pricing_api_url + countriesStr;
 
 		RequestEntity<Void> request = RequestEntity.get(URL).accept(MediaType.APPLICATION_JSON).build();
 		Map<String, BigDecimal> responseMap = restTemplate.exchange(request, responseType).getBody();
-		System.out.println("Response received from pricing API: "+responseMap);
+		log.info("Response received from pricing API: "+responseMap);
 		return responseMap;
 
 	}
